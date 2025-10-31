@@ -18,11 +18,20 @@ public class Item {
         this.description = description;
     }
 
-    public String getItem_name() {
+    public String getItemName() {
         return name;
     }
 
-    public void setItem_name(String item_name) {
+    public void setItemName(String item_name) {
         this.name = item_name;
+    }
+
+    public Object getType() {
+        return null;
+    }
+
+    @Override
+    public String toString() {
+        return name + ": " + description;
     }
 }
