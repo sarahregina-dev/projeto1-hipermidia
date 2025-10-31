@@ -12,7 +12,6 @@ public class RoomController {
 
     }
 
-
     public boolean addItemToRoom(Room room, Item item) {
         List<Item>items = room.getItems();
         if(items.contains(item)){
@@ -29,5 +28,4 @@ public class RoomController {
 
     }
 
-    //Todo:  get item on the floor, add item to the floor
 }

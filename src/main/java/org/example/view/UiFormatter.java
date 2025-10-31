@@ -60,14 +60,4 @@ public class UiFormatter {
         return sb.toString();
     }
 
-    // atalho de conveniência: você tem um texto grandão e quer só pôr numa caixa
-    public static String boxifyTextBlock(String text) {
-        // divide o texto original em linhas já existentes
-        String[] rawLines = text.split("\n");
-        List<String> lines = new ArrayList<>();
-        for (String l : rawLines) {
-            lines.add(l);
-        }
-        return boxify(lines);
-    }
 }

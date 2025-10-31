@@ -39,7 +39,7 @@ public class GameBuilder {
 
         GameController gameController = new GameController(worldController);
         GameView gameView = new GameView(scanner);
-        return new GameEngine(worldController, gameController, gameView);
+        return new GameEngine(gameController, gameView);
 
 
     }

@@ -39,6 +39,7 @@ public class WorldController {
     public boolean isGameOver() {
         return world.isGameOver();
     }
+
     public Monster getDefeatingMonster() {
         return world.getDefeatingMonster();
     }

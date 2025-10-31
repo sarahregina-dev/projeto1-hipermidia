@@ -18,7 +18,7 @@ public class InventoryController {
 
     }
 
-    public Boolean drop(Item item){    // lembrar de depois fazer o drop, add na sala atual, mas no controller da sala
+    public Boolean drop(Item item){
          return inventory.remove(item);
 
     }

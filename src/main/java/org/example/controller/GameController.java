@@ -42,17 +42,12 @@ public class GameController {
 
         return switch (action) {
             case "look", "olhar", "examinar", "examinar sala" -> {
-                // Pega os DADOS do WorldController
                 Room currentRoom = worldController.getCurrentRoom();
-                //  Passa os DADOS para a View renderizar
                 yield roomView.renderRoom(currentRoom);
             }
 
-            case "inventario", "inventário", "mochila", "bag" -> {
-                //  Pega o InventoryController (que tem os dados)
-                //   View renderiza
-                yield inventoryView.render(worldController.getInventoryController());
-            }
+            case "inventario", "inventário", "mochila", "bag" ->
+                    inventoryView.render(worldController.getInventoryController());
 
             case "ir" -> {
                 if (arg.isEmpty()) {
