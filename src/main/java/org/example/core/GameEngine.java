@@ -31,12 +31,9 @@ public class GameEngine {
 
             String response = gameController.handleCommand(input);
 
-            // 1. SEMPRE mostre a resposta.
-            //    (A resposta pode ser "Você andou para o norte",
-            //    "GAME OVER", ou "VOCÊ VENCEU!")
+            // 1. Mostre a resposta da ação na View
             gameView.showMessage(response);
-
-            // 2. Verifique se o comando foi "sair"
+            // 2. Verifique se o jogador quer sair do jogo
             if (response.equals("__EXIT_GAME__")) {
                 gameView.showGoodbye();
                 break;
