@@ -22,6 +22,9 @@ public class Inventory {
 
     }
     public boolean remove(Item item) {
+        if(!items.contains(item)){
+            return false;
+        }
         return items.remove(item);
     }
 
@@ -37,6 +40,15 @@ public class Inventory {
         }
         return null;
     }
+    public boolean hasItemByName(String name) {
+        for (Item item : this.items) {
+            if (item.getItemName().equalsIgnoreCase(name)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     public int getMaxItems() {
         return maxItems;

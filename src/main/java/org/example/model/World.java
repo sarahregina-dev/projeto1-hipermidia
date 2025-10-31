@@ -10,6 +10,7 @@ public class World {
     private Room currentRoom;
     private int inventaryMaxItems;
     private boolean isGameOver = false;
+    private Monster defeatingMonster = null;
 
     public World(Map<String, Room> rooms, Room startingRoom, Room currentRoom, Room endingRoom, int inventaryMaxItems) {
         this.rooms = rooms;
@@ -65,6 +66,12 @@ public class World {
 
     public void setInventaryMaxItems(int inventaryMaxItems) {
         this.inventaryMaxItems = inventaryMaxItems;
+    }
+    public void setDefeatingMonster(Monster monster) {
+        this.defeatingMonster = monster;
+    }
+    public Monster getDefeatingMonster() {
+        return this.defeatingMonster;
     }
 
 

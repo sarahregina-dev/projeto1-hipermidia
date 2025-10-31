@@ -1,5 +1,8 @@
 package org.example.view;
 
+import org.example.model.Monster;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -56,35 +59,26 @@ public class GameView {
   
 """;
     String titulo = """  
-                ▗▄▄▄▖ ▗▄▄▖ ▗▄▄▖ ▗▄▖ ▗▄▄▖ ▗▄▄▄▖
-                ▐▌   ▐▌   ▐▌   ▐▌ ▐▌▐▌ ▐▌▐▌  \s
-                ▐▛▀▀▘ ▝▀▚▖▐▌   ▐▛▀▜▌▐▛▀▘ ▐▛▀▀▘
-                ▐▙▄▄▖▗▄▄▞▘▝▚▄▄▖▐▌ ▐▌▐▌   ▐▙▄▄▖
-                """;
+             ▗▄▖      ▗▄▄▖ ▗▄▖  ▗▄▄▖▗▄▄▄▖▗▄▄▄▖▗▖    ▗▄▖     ▗▄▄▄   ▗▄▖      ▗▄▄▖ ▗▄▖ ▗▄▄▖ ▗▖  ▗▖ ▗▄▖\s
+            ▐▌ ▐▌    ▐▌   ▐▌ ▐▌▐▌     █  ▐▌   ▐▌   ▐▌ ▐▌    ▐▌  █ ▐▌ ▐▌    ▐▌   ▐▌ ▐▌▐▌ ▐▌▐▌  ▐▌▐▌ ▐▌
+            ▐▌ ▐▌    ▐▌   ▐▛▀▜▌ ▝▀▚▖  █  ▐▛▀▀▘▐▌   ▐▌ ▐▌    ▐▌  █ ▐▌ ▐▌    ▐▌   ▐▌ ▐▌▐▛▀▚▖▐▌  ▐▌▐▌ ▐▌
+            ▝▚▄▞▘    ▝▚▄▄▖▐▌ ▐▌▗▄▄▞▘  █  ▐▙▄▄▖▐▙▄▄▖▝▚▄▞▘    ▐▙▄▄▀ ▝▚▄▞▘    ▝▚▄▄▖▝▚▄▞▘▐▌ ▐▌ ▝▚▞▘ ▝▚▄▞▘
+            
+                      ▄████▄   ▄████▄   ▄████▄   ▄████▄   ▄████▄   ▄████▄   ▄████▄   ▄████▄\s""";
 
 
     String gameOverSkull = """
- @@@@@                                        @@@@@
-@@@@@@@                                      @@@@@@@
-@@@@@@@           @@@@@@@@@@@@@@@            @@@@@@@
- @@@@@@@@       @@@@@@@@@@@@@@@@@@@        @@@@@@@@
-     @@@@@     @@@@@@@@@@@@@@@@@@@@@     @@@@@
-       @@@@@  @@@@@@@@@@@@@@@@@@@@@@@  @@@@@
-         @@  @@@@@@@@@@@@@@@@@@@@@@@@@  @@
-            @@@@@@@    @@@@@@    @@@@@@
-            @@@@@@      @@@@      @@@@@
-            @@@@@@      @@@@      @@@@@
-             @@@@@@    @@@@@@    @@@@@
-              @@@@@@@@@@@  @@@@@@@@@@
-               @@@@@@@@@@  @@@@@@@@@
-           @@   @@@@@@@@@@@@@@@@@   @@
-           @@@@  @@@@ @ @ @ @ @@@@  @@@@
-          @@@@@   @@@ @ @ @ @ @@@   @@@@@
-        @@@@@      @@@@@@@@@@@@@      @@@@@
-      @@@@          @@@@@@@@@@@          @@@@
-   @@@@@              @@@@@@@              @@@@@
-  @@@@@@@                                 @@@@@@@
-   @@@@@                                   @@@@@
+       ▗▄▄▖ ▗▄▖ ▗▖  ▗▖▗▄▄▄▖     ▗▄▖ ▗▖  ▗▖▗▄▄▄▖▗▄▄▖\s
+      ▐▌   ▐▌ ▐▌▐▛▚▞▜▌▐▌       ▐▌ ▐▌▐▌  ▐▌▐▌   ▐▌ ▐▌
+      ▐▌▝▜▌▐▛▀▜▌▐▌  ▐▌▐▛▀▀▘    ▐▌ ▐▌▐▌  ▐▌▐▛▀▀▘▐▛▀▚▖
+       ▚▄▞▘▐▌ ▐▌▐▌  ▐▌▐▙▄▄▖    ▝▚▄▞▘ ▝▚▞▘ ▐▙▄▄▖▐▌ ▐▌
+      
+                        _____
+                       /     \\
+                      | () () |
+                      \\  ^  /
+                        |||||
+                        |||||⠀⠀⠀⠀⠀⠀
 """;
     public GameView(Scanner scanner) {
         this.scanner = scanner;
@@ -96,15 +90,21 @@ public class GameView {
 
     }
 
+
+
     public void showIntro() {
         List<String> introTextList = List.of(
-                "Parece que entrou aqui sem querer...  crow crow ♫ ♪",
-                "Agora precisa achar a saída o mais rápido possível.",
+                "Parece que chegou aqui sem quererr...  Crá-crá ♫ ♪",
+                "Se entrrrar, vai precisar achar a saída o mais rrrápido possível ♫ ♪ ",
                 "",
                 "Seus comandos são:",
                 "olhar | ir <direcao> | pegar <item> | largar <item> | inventario | usar <item> | sair",
                 "",
-                "Boa sorte!"
+                "Digite 'entrar' .. ♪ Crá-crá ♫  ... para começarrr sua aventura... ♫ Crá-crá ♪ ",
+                "",
+                "Ou 'sair'  ♪  ... se preferir desistirrr agora... ♫  ... Crá-crá ♪ ",
+                "",
+                "... Boa sorrrte! ♫ ♪"
         );
 
 
@@ -122,15 +122,40 @@ public class GameView {
     }
 
     public void showGoodbye() {
-        System.out.println("Obrigado por jogar! Até a próxima.");
+        System.out.println("Obrigado por jogarr ♫ ♪! Até a prrróxima. Crá-crá ♫ ♪");
     }
 
     public void showGameWon() {
-        System.out.println("Finalmente! Você conseguiu chegar no seu objetivo!");
+        System.out.println("GAME WON! ... Crá crá ♫ ♪ ... Você conseguiu encontrarrr a saída! ♫ ♪ ");
     }
 
-    public void showGameOver() {
-        System.out.println("Game Over! Você foi pego pelos inimigos.");
+    public void showGameOver(Monster monster) {
+
         System.out.println(gameOverSkull);
+        System.out.println();
+
+        List<String> messageLines = new ArrayList<>();
+
+        if (monster != null) {
+            // 1. Título do Box
+            messageLines.add("Crrrá... GAME OVER! ♫ ♪");
+            messageLines.add("");
+            messageLines.add("Parece que o " + monster.getName() + " foi mais rrrápido... ♫ ♪");
+            messageLines.add(monster.getDescription());
+            messageLines.add("");
+            messageLines.add(monster.getDescription());
+            messageLines.add("");
+           // messageLines.add("Você precisava do item [" + monster.getDefeatItem() + "] para vencê-lo."); // Comentar para dificultar
+        } else {
+            messageLines.add("Parece que algo desconhecido te matou ♫ ♪...");
+            messageLines.add("Prrrecisamos investigarrrr ♫ ♪ .");
+        }
+
+        String boxedMessage = UiFormatter.boxify(messageLines);
+        System.out.println(boxedMessage);
+
+        System.out.println();
+
+
     }
 }

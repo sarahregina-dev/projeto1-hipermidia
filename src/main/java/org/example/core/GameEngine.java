@@ -2,6 +2,7 @@ package org.example.core;
 
 import org.example.controller.GameController;
 import org.example.controller.world.WorldController;
+import org.example.model.Monster;
 import org.example.view.GameView;
 
 public class GameEngine {
@@ -18,33 +19,67 @@ public class GameEngine {
     }
 
     public void run() {
-        //Nome do jogo e artes
+        // Nome do jogo e artes
         gameView.showTitleAndArt();
         gameView.showIntro();
 
-        //Msg inicial
+        while (true) {
+            String input = gameView.getInput();
+
+            if (input.trim().equalsIgnoreCase("entrar")) {
+                break; // Sai do pré-loop e começa o jogo
+            } else if (input.trim().equalsIgnoreCase("sair")) {
+                gameView.showGoodbye(); // Permite que o jogador desista
+                return;
+            } else {
+                gameView.showMessage("Digite 'entrar' para começar ou 'sair' para desistir.");
+            }
+        }
+
+        // Msg inicial
         String initialDescription = gameController.handleCommand("olhar");
         gameView.showMessage(initialDescription);
+
+        // <<< MUDANÇA: O LOOP AGORA INTERCEPTA OS SINAIS >>>
         while (true) {
             // Pega o input da View
             String input = gameView.getInput();
 
             String response = gameController.handleCommand(input);
 
-            // 1. Mostre a resposta da ação na View
-            gameView.showMessage(response);
-            // 2. Verifique se o jogador quer sair do jogo
+            // --- Verifique os SINAIS ESPECIAIS ---
+
+            // 1. Verifique se o jogador quer sair do jogo
             if (response.equals("__EXIT_GAME__")) {
                 gameView.showGoodbye();
                 break;
             }
 
-            // 3. Verifique se o jogo terminou (vitória OU derrota)
-            //    (A mensagem de vitória/derrota já foi impressa no passo 1)
-            if (gameController.isGameOver()) {
+            // 2. Verifique se o sinal de DERROTA foi recebido
+            else if (response.equals("__GAME_OVER_DEFEAT__")) {
+                Monster monster = gameController.getDefeatingMonster();
 
-                break;
+
+                gameView.showGameOver(monster);
+                break; // O jogo acabou (gameController.isGameOver() já é true)
             }
+
+            // 3. Verifique se o sinal de VITÓRIA foi recebido
+            else if (response.endsWith("__GAME_WON__")) {
+                // Pode haver um prefixo (ex: msg de combate)
+                String prefix = response.replace("__GAME_WON__", "");
+                if (!prefix.trim().isEmpty()) {
+                    gameView.showMessage(prefix);
+                }
+                gameView.showGameWon();
+                break; // O jogo acabou (gameController.isGameOver() é true)
+            }
+
+            // mensagem normal
+            else {
+                gameView.showMessage(response);
+            }
+
 
         }
     }

@@ -39,6 +39,9 @@ public class WorldController {
     public boolean isGameOver() {
         return world.isGameOver();
     }
+    public Monster getDefeatingMonster() {
+        return world.getDefeatingMonster();
+    }
 
 
 
@@ -49,93 +52,86 @@ public class WorldController {
     public String moveToRoomDirection(String direction) {
         Room currentRoom = world.getCurrentRoom();
         String nextRoomName = currentRoom.getAdjacentRooms().get(direction);
-
-        if (nextRoomName != null) {
-            Room nextRoom = world.getRooms().get(nextRoomName);
-            if (nextRoom != null) {
-                // Mover o jogador
-                world.setCurrentRoom(nextRoom);   // Atualiza a sala atual do mundo
-
-                String responsePrefix = ""; // Mensagem de combate, se houver
-
-                //  LÓGICA DE COMBATE
-                Monster monster = nextRoom.getMonster();
-                if (monster != null && !monster.isDefeated()) {
-                    String defeatItem = monster.getDefeatItem();
-
-                    if (inventoryController.hasItemByName(defeatItem)) {
-                        // Vitória no Combate
-                        monster.setDefeated(true); // Marca o monstro como morto
-                        // (Opcional: consumir o item)
-                        // inventoryController.removeItem(defeatItem);
-                        responsePrefix = monster.getDefeatMessage() + "\n\n";
-                        Item item = inventoryController.getItemByName(defeatItem);
-                        inventoryController.drop(item);
-
-
-                    } else {
-                        //  Derrota (GAME OVER)
-                        world.setGameOver(true); // AVISA QUE O JOGO ACABOU
-                        return "GAME OVER: " + monster.getDescription() + "\n" +
-                                "Você não tem o item [" + defeatItem + "] para se defender!";
-                    }
-                }
-
-                //VITÓRIA
-                // (Só chega aqui se sobreviveu ao passo 2)
-                if (nextRoom == world.getEndingRoom()) {
-                    world.setGameOver(true); // AVISA QUE O JOGO ACABOU
-                    return responsePrefix + "VOCÊ VENCEU! Você encontrou a saída!\n\n" +
-                            nextRoom.getDescription(); // Retorna a descrição crua
-                }
-
-                // JOGO CONTINUA (Moveu, não morreu, não venceu)
-                // Retorna a msg de combate (se houver) + descrição da sala
-                return responsePrefix + nextRoom.getDescription();
-
-            } else {
-                return "A sala para onde você está tentando ir não existe.";
-            }
-        } else {
-            return "Não há saída nessa direção.";
+        if(nextRoomName == null) {
+            return "__MOVE_ERROR_NO_EXIT__";
         }
+        Room nextRoom = world.getRooms().get(nextRoomName);
+        if (nextRoom == null) {
+            return "__MOVE_ERROR_ROOM_NOT_FOUND__";
+        }
+        // Mover o jogador
+        world.setCurrentRoom(nextRoom);
+        String responsePrefix = "";
+
+        // LÓGICA DE COMBATE
+        Monster monster = nextRoom.getMonster();
+        if (monster != null && !monster.isDefeated()) {
+            String defeatItem = monster.getDefeatItem();
+
+            if (inventoryController.hasItemByName(defeatItem)) {
+                // Vitória no Combate
+                monster.setDefeated(true);
+                responsePrefix = monster.getDefeatMessage() + "\n\n";
+                Item item = inventoryController.getItemByName(defeatItem);
+                inventoryController.drop(item);
+            } else {
+                // Derrota (GAME OVER)
+                world.setGameOver(true);
+                world.setDefeatingMonster(monster);
+
+                return "__GAME_OVER_DEFEAT__";
+            }
+        }
+
+        // VITÓRIA
+        if (nextRoom == world.getEndingRoom()) {
+            world.setGameOver(true);
+            return responsePrefix + "__GAME_WON__";
+        }
+        // JOGO CONTINUA
+        // Retorna a msg de combate (se houver) + descrição da sala
+        return responsePrefix + nextRoom.getDescription();
+
+
     }
 
 
     public String takeItem(String itemName){
         Room current = world.getCurrentRoom();
         Item removedItem = roomController.removeItemFromRoom(current, itemName);
-
-        if(removedItem != null){
-            String result = inventoryController.pickUp(removedItem);
-            if (result.startsWith("Inventário cheio")) {
-                roomController.addItemToRoom(current, removedItem);
-                return "Não foi possível pegar o item: " + itemName;
-            } else {
-                return result;
-            }
-        }else{
-            return "Item não encontrado na sala: " + itemName;
+        if (removedItem == null) {
+            return "__TAKE_ERROR_NOT_FOUND__";
         }
+        boolean pickUpSucess = inventoryController.pickUp(removedItem);
+
+        if(pickUpSucess){
+            return "__TAKE_SUCCESS__";
+        } else {
+            // Devolve o item para a sala
+            roomController.addItemToRoom(current, removedItem);
+            return "__TAKE_ERROR_FULL__";
+        }
+
+
+
     }
 
     public String dropItem(String itemName){
         Room current = world.getCurrentRoom();
-        if (inventoryController.hasItemByName(itemName)){
-            Item itemToDrop = inventoryController.getItemByName(itemName);
-            if(itemToDrop== null){
-                return "Item não encontrado no inventário: " + itemName;
-            }
-            String result = inventoryController.drop(itemToDrop);
-            if(result.startsWith("Você largou")){
-                roomController.addItemToRoom(current, itemToDrop);
-                return result;
-            } else {
-                inventoryController.pickUp(itemToDrop);
-                return "Não foi possível soltar o item: " + itemName + " aqui.";
-            }
-        } else {
-            return "Item não encontrado no inventário: " + itemName;
+        Item itemToDrop = inventoryController.getItemByName(itemName);
+
+        if (itemToDrop == null) {
+            return "__DROP_ERROR_NOT_FOUND__";
+
+        }
+
+        boolean dropSucess = inventoryController.drop(itemToDrop);
+
+        if(dropSucess){
+            roomController.addItemToRoom(current, itemToDrop);
+            return "__DROP_SUCCESS__";
+        }else {
+            return "__DROP_ERROR_GENERIC";
         }
     }
 
@@ -143,24 +139,19 @@ public class WorldController {
         Room current = world.getCurrentRoom();
 
 
-        // 1. Tenta achar uma useAction da sala
+        //  O jogador tem o item?
+        if (!inventoryController.hasItemByName(itemName)) {
+            return "__USE_ERROR_NOT_OWNED__";
+        }
+        // O item faz algo nesta sala?
         UseAction action = findUseActionForItem(current, itemName);
         if (action == null) {
-            return "Nada acontece.";
+            return "__USE_ERROR_NO_ACTION__";
         }
-
-        // 2. Exigir que o jogador tenha o item
-        if (!inventoryController.hasItemByName(itemName)) {
-            return "Você não tem " + itemName + ".";
-        }
-
-        // 3. Aplica o efeito
         applyUseAction(current, action);
 
-        // (Opcional: consumir o item)
-         Item item = inventoryController.getItemByName(itemName);
-         inventoryController.drop(item);
-
+        //  Se chegou aqui deu certo
+        // Retorne a descrição do JSON
         return action.getDescription();
     }
 
@@ -184,6 +175,7 @@ public class WorldController {
                             action.getToRoom()
                     );
                 }
+
             }
             case "fechar_direcao" -> {
                 if(action.getDirection()!=null) {
@@ -202,7 +194,7 @@ public class WorldController {
             case "sumir_item_da_sala" -> {
                 Item itemParaSumir = inventoryController.getItemByName(action.getTargetItem());
                 if(itemParaSumir!=null){
-                    removeItemFromRoomByName(room, action.getTargetItem());
+                    inventoryController.drop(itemParaSumir);
                 }
             }
             case "derrotar_monstro" -> {
@@ -217,18 +209,6 @@ public class WorldController {
             }
         }
     }
-
-    private void removeItemFromRoomByName(Room room, String targetName) {
-        Iterator<Item> it = room.getItems().iterator();
-        while (it.hasNext()) {
-            Item i = it.next();
-            if (i.getItemName().equalsIgnoreCase(targetName)) {
-                it.remove();
-                break;
-            }
-        }
-    }
-
 
 
 }

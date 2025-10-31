@@ -13,22 +13,14 @@ public class InventoryController {
         this.inventory = inventory;
     }
 
-    public String pickUp(Item item){
-        boolean success = inventory.add(item);
-        if (success){
-            return "Você pegou o item: " + item.getItemName();
-        } else {
-            return "Inventário cheio! Não é possível pegar o item: " + item.getItemName();
-        }
+    public Boolean pickUp(Item item){
+       return inventory.add(item);
+
     }
 
-    public String drop(Item item){    // lembrar de depois fazer o drop, add na sala atual, mas no controller da sala
-        boolean success = inventory.remove(item);
-        if (success){
-            return "Você largou o item: " + item.getItemName();
-        } else {
-            return "Item não encontrado no inventário: " + item.getItemName();
-        }
+    public Boolean drop(Item item){    // lembrar de depois fazer o drop, add na sala atual, mas no controller da sala
+         return inventory.remove(item);
+
     }
 
     public List<Item> getItems() {
@@ -36,15 +28,8 @@ public class InventoryController {
         return inventory.getItems();
     }
 
-
-
     public boolean hasItemByName(String name) {
-        for (Item item : inventory.getItems()) {
-            if (item.getItemName().equalsIgnoreCase(name)) {
-                return true;
-            }
-        }
-        return false;
+        return inventory.hasItemByName(name);
     }
 
     public Item getItemByName(String name) {
@@ -63,6 +48,7 @@ public class InventoryController {
     public int getCurrentSize() {
         return inventory.getItems().size();
     }
+
 
 
 
