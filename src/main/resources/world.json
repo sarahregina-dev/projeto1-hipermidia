@@ -1,9 +1,7 @@
-
 {
   "main": "portao_principal",
   "exit": "jardim_secreto",
   "max_itens": 3,
-
   "rooms": {
     "portao_principal": {
       "description": "Portão principal do Castelo do Corvo. Está aberto, mas o saguão a frente parece escuro.",
@@ -13,7 +11,6 @@
       "monster": null,
       "use": []
     },
-
     "saguao_principal": {
       "description": "O Saguão Principal é vasto e silencioso. Uma escadaria leva ao andar superior.",
       "south": "portao_principal",
@@ -26,7 +23,6 @@
       "monster": null,
       "use": []
     },
-
     "biblioteca": {
       "description": "Uma biblioteca empoeirada. As estantes estão cheias de livros antigos e um cheiro de mofo paira no ar.",
       "west": "saguao_principal",
@@ -42,7 +38,6 @@
       },
       "use": []
     },
-
     "sala_de_leitura": {
       "description": "Um pequeno cômodo adjacente à biblioteca, com uma única poltrona e uma mesa.",
       "south": "biblioteca",
@@ -52,11 +47,9 @@
       "monster": null,
       "use": []
     },
-
     "sala_de_jantar": {
       "description": "Uma longa mesa de jantar coberta por teias de aranha. Há uma porta trancada a oeste.",
       "east": "saguao_principal",
-      "west": "cozinha_velha",
       "itens": {
         "faca_serrilhada": "Uma faca de pão, grande e serrilhada."
       },
@@ -65,11 +58,14 @@
         {
           "item": "chave_prata",
           "description": "A chave de prata encaixa na fechadura da porta oeste, que se abre com um rangido.",
-          "action": "abrir nova direção"
+          "action": {
+            "type": "abrir_direcao",
+            "direction": "west",
+            "to": "cozinha_velha"
+          }
         }
       ]
     },
-
     "cozinha_velha": {
       "description": "A cozinha do castelo. Potes e panelas estão jogados no chão. Há um barril suspeito no canto.",
       "east": "sala_de_jantar",
@@ -84,7 +80,6 @@
       },
       "use": []
     },
-
     "corredor_norte": {
       "description": "Um longo corredor no segundo andar, com várias tapeçarias rasgadas nas paredes.",
       "down": "saguao_principal",
@@ -94,7 +89,6 @@
       "monster": null,
       "use": []
     },
-
     "sala_de_armas": {
       "description": "Nesta sala, armaduras vazias e armas enferrujadas adornam as paredes. Uma passagem estreita leva ao sul.",
       "east": "corredor_norte",
@@ -105,7 +99,6 @@
       "monster": null,
       "use": []
     },
-
     "quarto_do_rei": {
       "description": "O quarto principal, dominado por uma cama com dossel. O ar é frio e pesado.",
       "west": "corredor_norte",
@@ -120,27 +113,30 @@
       },
       "use": []
     },
-
     "escadaria_secreta": {
       "description": "Uma escadaria de pedra escura desce até um túnel no subsolo. O túnel está bloqueado por escombros.",
       "north": "sala_de_armas",
-      "down": "jardim_secreto",
       "itens": {},
       "monster": null,
       "use": [
         {
           "item": "corda_longa",
           "description": "Você amarra a corda a um pilar e desce pelo buraco, contornando os escombros.",
-          "action": "abrir nova direção"
+          "action": {
+            "type": "abrir_direcao",
+            "direction": "down",
+            "to": "jardim_secreto"
+          }
         },
         {
           "item": "elmo",
           "description": "Você tenta usar o elmo para cavar, mas não funciona. O elmo quebra.",
-          "action": "sumir com item"
+          "action": {
+            "type": "sumir_item_do_inventario"
+          }
         }
       ]
     },
-
     "jardim_secreto": {
       "description": "Você encontrou o Jardim Secreto, a saída do castelo! Uma luz suave te espera.",
       "up": "escadaria_secreta",

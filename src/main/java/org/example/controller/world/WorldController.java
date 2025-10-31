@@ -178,22 +178,32 @@ public class WorldController {
     private void applyUseAction(Room room, UseAction action) {
         switch (action.getType()) {
             case "abrir_direcao" -> {
-                room.getAdjacentRooms().put(
-                        action.getDirection(),
-                        action.getToRoom()
-                );
+                if(action.getDirection()!=null && action.getToRoom()!=null) {
+                    room.getAdjacentRooms().put(
+                            action.getDirection(),
+                            action.getToRoom()
+                    );
+                }
             }
             case "fechar_direcao" -> {
-                room.getAdjacentRooms().remove(action.getDirection());
+                if(action.getDirection()!=null) {
+                    room.getAdjacentRooms().remove(action.getDirection());
+
+                }
             }
             case "aparecer_item_na_sala" -> {
-                // cria item novo na sala
-                room.getItems().add(
-                        new Item(action.getTargetItem(), "Um item apareceu aqui.")
-                );
+
+                if(action.getTargetItem()!=null){
+                    room.getItems().add(
+                            new Item(action.getTargetItem(), "Um item apareceu aqui.")
+                    );
+                }
             }
             case "sumir_item_da_sala" -> {
-                removeItemFromRoomByName(room, action.getTargetItem());
+                Item itemParaSumir = inventoryController.getItemByName(action.getTargetItem());
+                if(itemParaSumir!=null){
+                    removeItemFromRoomByName(room, action.getTargetItem());
+                }
             }
             case "derrotar_monstro" -> {
                 Monster m = room.getMonster();
@@ -202,7 +212,7 @@ public class WorldController {
                 }
             }
             default -> {
-                // tipo desconhecido → não faz nada
+                // desconhecido: não toma nenhuma ação
 
             }
         }

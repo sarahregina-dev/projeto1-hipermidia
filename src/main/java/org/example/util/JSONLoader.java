@@ -151,12 +151,19 @@ public class JSONLoader {
 
                 String itemName = useObj.getString("item");
                 String useDesc = useObj.getString("description");
-                String type = useObj.getString("action");
+
+                JSONObject actionObj = useObj.getJSONObject("action");
+
+                // Lemos as propriedades de dentro do objeto 'action'
+                String type = actionObj.getString("type");
+                String direction = actionObj.has("direction") ? actionObj.getString("direction") : null;
+                String toRoom = actionObj.has("to") ? actionObj.getString("to") : null;
+                String targetItem = actionObj.has("target_item") ? actionObj.getString("target_item") : null;
+
+                // target monster se precisar no futuro entra aqui
+                // String targetMonster = actionObj.has("target_monster") ? actionObj.getString("target_monster") : null;
 
 
-                String direction = useObj.has("direction") ? useObj.getString("direction") : null;
-                String toRoom = useObj.has("to") ? useObj.getString("to") : null;
-                String targetItem = useObj.has("item") ? useObj.getString("item") : null;
 
                 UseAction ua = new UseAction(
                         itemName,
@@ -164,7 +171,8 @@ public class JSONLoader {
                         type,
                         direction,
                         toRoom,
-                        targetItem
+                        targetItem,
+                        null
                 );
                 useActions.add(ua);
             }

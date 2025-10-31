@@ -42,6 +42,7 @@ public class GameEngine {
             // 3. Verifique se o jogo terminou (vitória OU derrota)
             //    (A mensagem de vitória/derrota já foi impressa no passo 1)
             if (gameController.isGameOver()) {
+
                 break;
             }
 
