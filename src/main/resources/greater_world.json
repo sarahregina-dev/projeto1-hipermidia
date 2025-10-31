@@ -1,0 +1,217 @@
+{
+  "main": "portao_principal",
+  "exit": "ninho_gigante",
+  "max_itens": 3,
+  "rooms": {
+    "portao_principal": {
+      "description": "Portão prrrincipal do Castelo do Corvo. Está escancarado, mas o saguão à frente parrrrece sombrio. Um vento frrrio traz o som... Crá! ♫",
+      "north": "saguao_principal",
+      "south": "exterior_nevoento",
+      "itens": {},
+      "monster": null,
+      "use": []
+    },
+    "saguao_principal": {
+      "description": "O Saguão Principal é vasto e silerrrcioso. Poeira e penas cobrrrem o chão. Uma escadaria leva ao andar superiorrr. ♫",
+      "south": "portao_principal",
+      "east": "biblioteca_poeirenta",
+      "west": "sala_de_jantar_vazia",
+      "up": "corredor_norte",
+      "itens": {
+        "fragmento_brilhante": "Um caco de vidro ou metal, algo brilhante! Crá! ♫"
+      },
+      "monster": null,
+      "use": []
+    },
+    "biblioteca_poeirenta": {
+      "description": "Uma biblioteca empoeirrrada. Estantes roídas pelo tempo, cheias de livrrros antigos e um cheiro de mofo e papel velho. ♫",
+      "west": "saguao_principal",
+      "east": "capela_arruinada",
+      "itens": {
+        "diario_rasgado": "Um volume antigo, com páginas arrrancadas."
+      },
+      "monster": {
+        "name": "guardiao_de_papel",
+        "description": "Um amontoado de diárrrios velhos e penas negras se errrgue e bloqueia o caminho! Crá! ♫",
+        "defeat_item": "fragmento_brilhante",
+        "defeat_message": "Você usa o fragmento brilhante para corrrrtar as cordas que prendem o guardião! Ele desmorrrrona em uma pilha de papel! ♫"
+      },
+      "use": []
+    },
+    "capela_arruinada": {
+      "description": "Uma capela com vitrrrais quebrados. Um grande sino de bronze jaz caído no chão, coberrrto de poeira. ♫",
+      "west": "biblioteca_poeirenta",
+      "north": "sala_de_leitura",
+      "itens": {
+        "sino_de_bronze": "Um sino pequeno e pesado, estranhamente silerrrcioso."
+      },
+      "monster": null,
+      "use": []
+    },
+    "sala_de_leitura": {
+      "description": "Um pequeno cômodo adjacente à capela, com uma única poltrona rrrrasgada e uma mesa quebrada. ♫",
+      "south": "capela_arruinada",
+      "itens": {
+        "chave_bicuda": "Uma chave de prrrrata com um ornamento em formato de bico de corvo. Brrrilhante! Crá! ♫"
+      },
+      "monster": null,
+      "use": []
+    },
+    "sala_de_jantar_vazia": {
+      "description": "Uma longa mesa de jantar coberrrta por teias e penas. Há uma porta trancada a oeste. ♫",
+      "east": "saguao_principal",
+      "itens": {
+        "osso_afiado": "Um osso de animal, grande e afiado."
+      },
+      "monster": null,
+      "use": [
+        {
+          "item": "chave_bicuda",
+          "description": "A chave bicuda girrra na fechadura da porta oeste, que se abre com um rrrangido. Crá! ♫",
+          "action": {
+            "type": "abrir_direcao",
+            "direction": "west",
+            "to": "cozinha_velha"
+          }
+        }
+      ]
+    },
+    "cozinha_velha": {
+      "description": "A cozinha do castelo. Panelas e potes enferrrrrujados estão jogados no chão. Há um barril suspeito no canto. ♫",
+      "east": "sala_de_jantar_vazia",
+      "west": "despensa_apodrecida",
+      "itens": {
+        "corda_de_sinos": "Um pedaço de corda grossa, parrrece ser de um sino. ♫"
+      },
+      "monster": null,
+      "use": []
+    },
+    "despensa_apodrecida": {
+      "description": "Um cheirrrro horrível de carne podre. Ganchos vazios balançam no teto. Crá! ♫",
+      "east": "cozinha_velha",
+      "itens": {
+        "estatueta_de_corvo": "Uma pequena estatueta de corvo, feita de ônix."
+      },
+      "monster": {
+        "name": "enxame_faminto",
+        "description": "Um aglomerado de rrratos e insetos forma uma criatura gigante e feroz! ♫",
+        "defeat_item": "osso_afiado",
+        "defeat_message": "Você golpeia a criaturrra central com o osso afiado! O enxame se dispersa aterrorrrrizado! Crá! ♫"
+      },
+      "use": []
+    },
+    "corredor_norte": {
+      "description": "Um longo corredor no segundo andar, com tapeçarrias rrrrasgadas nas paredes, mostrando corvos em batalha. ♫",
+      "down": "saguao_principal",
+      "east": "quarto_do_rei",
+      "west": "sala_de_armas",
+      "up": "torre_do_corvo",
+      "itens": {},
+      "monster": null,
+      "use": []
+    },
+    "sala_de_armas": {
+      "description": "Armadurrras vazias e armas enferrrrujadas. Elas parecem ter sido bicadas. Uma passagem estreita leva ao sul. Crá! ♫",
+      "east": "corredor_norte",
+      "south": "escadaria_secreta",
+      "itens": {
+        "elmo_arranhado": "Um elmo de aço, arrrrranhado por garras, sem valor de combate."
+      },
+      "monster": null,
+      "use": []
+    },
+    "quarto_do_rei": {
+      "description": "O quarto principal, dominado por uma cama com dossel rrrrasgado. O ar é frio e pesado, como o bater de asas. ♫",
+      "west": "corredor_norte",
+      "itens": {
+        "pergaminho_gasto": "Um pedaço de mapa indicando um 'Jardim Secreto' ao sul."
+      },
+      "monster": {
+        "name": "eco_lamentoso",
+        "description": "O espírito rrrancoroso do antigo rei protege este lugar! Seu lamento soa como um grito de corvo! Crá! ♫",
+        "defeat_item": "diario_rasgado",
+        "defeat_message": "Você abre o diário e lê em voz alta as memórias do rrrei. O eco se acalma e desaparece com um aceno... ♫"
+      },
+      "use": []
+    },
+    "escadaria_secreta": {
+      "description": "Uma escadaria de pedra escurrrra desce até um túnel no subsolo. O túnel está bloqueado por escombrrros. ♫",
+      "north": "sala_de_armas",
+      "itens": {},
+      "monster": null,
+      "use": [
+        {
+          "item": "corda_de_sinos",
+          "description": "Você amarrrra a corda a um pilar e desce pelo burrraco, contornando os escombros. ♫",
+          "action": {
+            "type": "abrir_direcao",
+            "direction": "down",
+            "to": "jardim_secreto"
+          }
+        },
+        {
+          "item": "elmo_arranhado",
+          "description": "Você tenta usar o elmo para cavar, mas não funciona. O elmo quebra em pedaços inúteis. Crá! ♫",
+          "action": {
+            "type": "sumir_item_do_inventario"
+          }
+        }
+      ]
+    },
+    "jardim_secreto": {
+      "description": "Um jarrrdim morto, cercado por estátuas de corvos que parecem te observar. Há um pedestal vazio no centro. ♫",
+      "up": "escadaria_secreta",
+      "itens": {},
+      "monster": null,
+      "use": [
+        {
+          "item": "estatueta_de_corvo",
+          "description": "Você coloca a estatueta de corvo no pedestal. Um alçapão se abre no chão com um rrrangido! Crá! ♫",
+          "action": {
+            "type": "abrir_direcao",
+            "direction": "down",
+            "to": "cripta_esquecida"
+          }
+        }
+      ]
+    },
+    "cripta_esquecida": {
+      "description": "Túmulos de pedra empoeirrrados. O ar é gelado. Em uma alcova, algo brrrilha. ♫",
+      "up": "jardim_secreto",
+      "itens": {
+        "joia_negra": "Uma joia negra e pulsante, cabia perfeitamente no olho de um corvo."
+      },
+      "monster": null,
+      "use": []
+    },
+    "torre_do_corvo": {
+      "description": "Uma escada em carrracol que sobe para a escuridão. O vento uiva como mil corvos. ♫ Uma grrrande estátua de corvo, com uma das órbitas vazia, bloqueia a subida. Crá! ♫",
+      "down": "corredor_norte",
+      "itens": {},
+      "monster": {
+        "name": "guardiao_alado",
+        "description": "Uma criatura pálida com asas de corvo bloqueia seu caminho! Crá! Crá! ♫",
+        "defeat_item": "sino_de_bronze",
+        "defeat_message": "Você toca o sino de bronze! O som agudo atordoa o guardião alado, que recua para as sombras! ♫"
+      },
+      "use": [
+        {
+          "item": "joia_negra",
+          "description": "Você coloca a Joia Negra na órbita vazia. Ela se encaixa perrrfeitamente, brilhando! A estátua grrrrasna e se move, rrrrevelando a passagem parrrra cima! ♫",
+          "action": {
+            "type": "abrir_direcao",
+            "direction": "up",
+            "to": "ninho_gigante"
+          }
+        }
+      ]
+    },
+    "ninho_gigante": {
+      "description": "O topo do castelo! Um ninho feito de galhos, ossos e objetos brrrilhantes! Você vê o céu aberto! É a saída! Crá! Crá! Crá! ♫",
+      "down": "torre_do_corvo",
+      "itens": {},
+      "monster": null,
+      "use": []
+    }
+  }
+}

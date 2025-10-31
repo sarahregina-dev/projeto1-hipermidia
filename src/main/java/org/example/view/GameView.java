@@ -1,5 +1,4 @@
 package org.example.view;
-
 import org.example.model.Monster;
 
 import java.util.ArrayList;
@@ -73,13 +72,10 @@ public class GameView {
       ▐▌▝▜▌▐▛▀▜▌▐▌  ▐▌▐▛▀▀▘    ▐▌ ▐▌▐▌  ▐▌▐▛▀▀▘▐▛▀▚▖
        ▚▄▞▘▐▌ ▐▌▐▌  ▐▌▐▙▄▄▖    ▝▚▄▞▘ ▝▚▞▘ ▐▙▄▄▖▐▌ ▐▌
       
-                        _____
-                       /     \\
-                      | () () |
-                      \\  ^  /
-                        |||||
-                        |||||⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀
 """;
+
+
     public GameView(Scanner scanner) {
         this.scanner = scanner;
     }
@@ -122,7 +118,7 @@ public class GameView {
     }
 
     public void showGoodbye() {
-        System.out.println("Obrigado por jogarr ♫ ♪! Até a prrróxima. Crá-crá ♫ ♪");
+        System.out.println("Obrigado pela visita ♫ ♪! Até a prrróxima. Crá-crá ♫ ♪");
     }
 
     public void showGameWon() {
@@ -131,20 +127,19 @@ public class GameView {
 
     public void showGameOver(Monster monster) {
 
-        System.out.println(gameOverSkull);
-        System.out.println();
-
         List<String> messageLines = new ArrayList<>();
 
         if (monster != null) {
             // 1. Título do Box
-            messageLines.add("Crrrá... GAME OVER! ♫ ♪");
-            messageLines.add("");
-            messageLines.add("Parece que o " + monster.getName() + " foi mais rrrápido... ♫ ♪");
             messageLines.add(monster.getDescription());
             messageLines.add("");
-            messageLines.add(monster.getDescription());
+            messageLines.add("Crrrá... Crrá... ♫ ♪ Que bagunça!");
+            messageLines.add("Mais sangue no meu chão... ♫");
             messageLines.add("");
+
+            messageLines.add("Foi o " + monster.getName() + ", não foi? ♫ ♪");
+            messageLines.add("Parrrece que ele foi mais rrrápido... ♫ ♪ ...mas isso é porrrque você não trrrouxe o item cerrrto! Crá! ♫");          messageLines.add("");
+
            // messageLines.add("Você precisava do item [" + monster.getDefeatItem() + "] para vencê-lo."); // Comentar para dificultar
         } else {
             messageLines.add("Parece que algo desconhecido te matou ♫ ♪...");
@@ -153,9 +148,12 @@ public class GameView {
 
         String boxedMessage = UiFormatter.boxify(messageLines);
         System.out.println(boxedMessage);
-
+        System.out.println();
+        System.out.println(gameOverSkull);
         System.out.println();
 
 
     }
+
+
 }
