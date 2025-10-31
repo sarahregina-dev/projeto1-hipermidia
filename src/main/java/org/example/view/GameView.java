@@ -106,7 +106,8 @@ public class GameView {
                 "",
                 "Boa sorte!"
         );
-        // Formata e imprime a introdução
+
+
         System.out.println(UiFormatter.boxify(introTextList));
         System.out.println();
     }

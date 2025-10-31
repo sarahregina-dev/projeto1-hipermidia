@@ -35,8 +35,7 @@ public class GameBuilder {
             System.exit(1);
         }
 
-        WorldController worldController = new WorldController();
-        worldController.initWorld(worldData);
+        WorldController worldController = new WorldController(worldData);
 
         GameController gameController = new GameController(worldController);
         GameView gameView = new GameView(scanner);

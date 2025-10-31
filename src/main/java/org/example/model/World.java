@@ -9,6 +9,7 @@ public class World {
     private Room endingRoom;
     private Room currentRoom;
     private int inventaryMaxItems;
+    private boolean isGameOver = false;
 
     public World(Map<String, Room> rooms, Room startingRoom, Room currentRoom, Room endingRoom, int inventaryMaxItems) {
         this.rooms = rooms;
@@ -51,6 +52,13 @@ public class World {
         this.currentRoom = currentRoom;
     }
 
+    public void setGameOver(boolean isGameOver) {
+        this.isGameOver = isGameOver;
+    }
+    public boolean isGameOver() {
+        return isGameOver;
+    }
+
     public int getInventaryMaxItems() {
         return inventaryMaxItems;
     }
@@ -58,4 +66,6 @@ public class World {
     public void setInventaryMaxItems(int inventaryMaxItems) {
         this.inventaryMaxItems = inventaryMaxItems;
     }
+
+
 }

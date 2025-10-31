@@ -16,7 +16,7 @@ public class RoomView {
         finalLines.add(room.getRoomName().toUpperCase(Locale.ROOT));
         finalLines.add("");
 
-        // descrição da sala (pode ser longa → quebrar)
+        // descrição da sala max 60
         finalLines.addAll(UiFormatter.wrapText(room.getDescription(), 60));
 
         // itens visíveis
@@ -55,7 +55,7 @@ public class RoomView {
         String exitsLine = String.join(", ", saidasPt);
         finalLines.addAll(UiFormatter.wrapText(exitsLine, 60));
 
-        // devolve tudo em uma caixinha
+        // devolve tudo na caixa
         return UiFormatter.boxify(finalLines);
     }
 }

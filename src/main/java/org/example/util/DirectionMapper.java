@@ -40,7 +40,7 @@ public class DirectionMapper {
             case "west":  return "oeste";
             case "up":    return "subir";
             case "down":  return "descer";
-            default:      return internalDir; // fallback de segurança
+            default:      return internalDir;
         }
     }
 }

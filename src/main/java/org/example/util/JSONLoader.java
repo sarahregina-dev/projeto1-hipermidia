@@ -18,25 +18,25 @@ import java.util.Map;
 
 public class JSONLoader {
 
-    /**
-     * Método público principal. Carrega o mundo, orquestrando os métodos auxiliares.
-     */
+
+     /** Método público principal. Carrega o mundo.
+      * */
     public static World loadFromFile(String path) {
         try {
-            // 1. Lê e parseia o JSON
+            // Lê e parseia o JSON
             String raw = Files.readString(Paths.get(path));
             JSONObject root = new JSONObject(raw);
 
-            // 2. Extrai os metadados globais
+            //Extrai os infos globais
             String startRoomName = root.getString("main");
             String endRoomName = root.getString("exit");
             int maxInventoryItems = root.getInt("max_itens");
 
-            // 3. Parseia todas as salas
+            // Parseia  as salas
             JSONObject roomsObject = root.getJSONObject("rooms");
             Map<String, Room> roomsByName = parseRooms(roomsObject);
 
-            // 4. Obtém as instâncias das salas de início e fim
+            // Obtém as instâncias das salas de início e fim
             Room startRoom = roomsByName.get(startRoomName);
             Room endRoom = roomsByName.get(endRoomName);
 
@@ -44,7 +44,6 @@ public class JSONLoader {
                 throw new RuntimeException("Salas 'main' ou 'exit' não encontradas no mapa de salas.");
             }
 
-            // 5. Cria e retorna o objeto World
             return new World(
                     roomsByName,
                     startRoom,
@@ -59,7 +58,7 @@ public class JSONLoader {
     }
 
     /**
-     * Itera sobre o objeto JSON "rooms" e parseia cada sala individualmente.
+     * Parseia cada sala individualmente.
      */
     private static Map<String, Room> parseRooms(JSONObject roomsObject) {
         Map<String, Room> roomsByName = new HashMap<>();
@@ -152,13 +151,12 @@ public class JSONLoader {
 
                 String itemName = useObj.getString("item");
                 String useDesc = useObj.getString("description");
-                String type = useObj.getString("action"); // Baseado no seu JSON
+                String type = useObj.getString("action");
 
-                // Seu JSON atual não tem essas propriedades, então elas serão null
+
                 String direction = useObj.has("direction") ? useObj.getString("direction") : null;
                 String toRoom = useObj.has("to") ? useObj.getString("to") : null;
                 String targetItem = useObj.has("item") ? useObj.getString("item") : null;
-                String targetMon = useObj.has("monster") ? useObj.getString("monster") : null;
 
                 UseAction ua = new UseAction(
                         itemName,
@@ -166,8 +164,7 @@ public class JSONLoader {
                         type,
                         direction,
                         toRoom,
-                        targetItem,
-                        targetMon
+                        targetItem
                 );
                 useActions.add(ua);
             }
