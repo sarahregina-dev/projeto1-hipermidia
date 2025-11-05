@@ -1,5 +1,6 @@
 package org.example.view;
 
+import org.example.controller.world.RoomController;
 import org.example.model.Item;
 import org.example.model.Monster;
 import org.example.model.Room;
@@ -9,18 +10,18 @@ import java.util.*;
 
 public class RoomView {
 
-    public String renderRoom(Room room) {
+    public String renderRoom(RoomController roomController, Room room) {
         List<String> finalLines = new ArrayList<>();
 
         // título: nome da sala em caps
-        finalLines.add(room.getRoomName().toUpperCase(Locale.ROOT));
+        finalLines.add(roomController.getRoomName(room).toUpperCase(Locale.ROOT));
         finalLines.add("");
 
         // descrição da sala max 60
         finalLines.addAll(UiFormatter.wrapText(room.getDescription(), 60));
 
         // itens visíveis
-        if (!room.getItems().isEmpty()) {
+        if (!roomController.getItemsInRoom(room).isEmpty()) {
             finalLines.add("");
             finalLines.add("Você vê:");
 
@@ -32,7 +33,7 @@ public class RoomView {
         }
 
         // monstro presente
-        Monster monster = room.getMonster();
+        Monster monster = roomController.getMonster(room);
         if (monster != null && !monster.isDefeated()) {
             finalLines.add("");
             finalLines.add("Perigo aqui:");

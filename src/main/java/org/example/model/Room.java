@@ -70,7 +70,7 @@ public class Room {
 
     }
 
-    public Dictionary<String, String> getAdjacentRooms() {
+    public  Dictionary<String, String> getAdjacentRooms() {
         return adjacentRooms;
     }
     public Item getItemByName(String itemName) {

@@ -18,15 +18,11 @@ public class GameController {
 
     public GameController(WorldController worldController) {
         this.worldController = worldController;
-
         this.roomView = new RoomView();
         this.inventoryView = new InventoryView();
     }
 
 
-    public boolean isGameOver() {
-        return worldController.isGameOver();
-    }
     public Monster getDefeatingMonster() {
         return worldController.getDefeatingMonster();
     }
@@ -45,13 +41,13 @@ public class GameController {
         return switch (action) {
             case "look", "olhar", "examinar", "examinar sala" -> {
                 Room currentRoom = worldController.getCurrentRoom();
-                yield roomView.renderRoom(currentRoom);
+                yield roomView.renderRoom(worldController.getRoomController(), currentRoom);
             }
 
             case "inventario", "inventário", "mochila", "bag" ->
                     inventoryView.render(worldController.getInventoryController());
 
-            case "ir" -> {
+            case "ir", "go" -> {
                 if (arg.isEmpty()) {
                     yield "Irrr para onde? ♫ ♪ ";
                 }
@@ -71,7 +67,7 @@ public class GameController {
 
             }
 
-            case "pegar" -> {
+            case "pegar", "pick" -> {
                 if (arg.isEmpty()) yield "Pegarrr o quê?  ♫ ♪" ;
 
                 String takeResult = worldController.takeItem(arg);
@@ -84,7 +80,7 @@ public class GameController {
                 };
             }
 
-            case "largar", "drop" -> {
+            case "largar", "drop", "soltar" -> {
 
                 if (arg.isEmpty()) yield "Largarrr o quê?  ♫ ♪";
                 String dropResult = worldController.dropItem(arg);
@@ -104,7 +100,7 @@ public class GameController {
 
                 yield switch (useResult){
                     case "__USE_ERROR_NOT_OWNED__" -> "Você não tem esse item: " + arg + " ♫ ♪ ";
-                    case "__USE_ERROR_CANNOT_USE__" -> "Nada aconteceu ao usarrr: " + arg + " ♫ ♪ Crá-crá  ♪ ";
+                    case "__USE_ERROR_NO_ACTION__" -> "Nada aconteceu ao usarrr: " + arg + " ♫ ♪ Crá-crá  ♪ ";
                     default -> useResult; // Sucesso
                 };
             }

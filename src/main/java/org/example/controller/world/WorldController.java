@@ -40,18 +40,22 @@ public class WorldController {
         return world.isGameOver();
     }
 
+    public RoomController getRoomController() {
+        return this.roomController;
+    }
+
     public Monster getDefeatingMonster() {
         return world.getDefeatingMonster();
     }
 
 
 
-    /**
-     * Move o jogador, executa combate E verifica a vitória.
-     */
+    ///Move o jogador, executa combate E verifica a vitória.
+
     public String moveToRoomDirection(String direction) {
         Room currentRoom = world.getCurrentRoom();
-        String nextRoomName = currentRoom.getAdjacentRooms().get(direction);
+        //String nextRoomName = currentRoom.getAdjacentRooms().get(direction);
+        String nextRoomName = roomController.getAdjacentRooms(currentRoom).get(direction);
         if(nextRoomName == null) {
             return "__MOVE_ERROR_NO_EXIT__";
         }
@@ -169,7 +173,7 @@ public class WorldController {
         switch (action.getType()) {
             case "abrir_direcao" -> {
                 if(action.getDirection()!=null && action.getToRoom()!=null) {
-                    room.getAdjacentRooms().put(
+                    roomController.getAdjacentRooms(room).put(
                             action.getDirection(),
                             action.getToRoom()
                     );
@@ -178,7 +182,7 @@ public class WorldController {
             }
             case "fechar_direcao" -> {
                 if(action.getDirection()!=null) {
-                    room.getAdjacentRooms().remove(action.getDirection());
+                    roomController.getAdjacentRooms(room).remove(action.getDirection());
 
                 }
             }
@@ -190,8 +194,8 @@ public class WorldController {
                     );
                 }
             }
-            case "sumir_item_da_sala" -> {
-                Item itemParaSumir = inventoryController.getItemByName(action.getTargetItem());
+            case "sumir_item_do_inventorio" -> {
+                Item itemParaSumir = inventoryController.getItemByName(action.getItemName());
                 if(itemParaSumir!=null){
                     inventoryController.drop(itemParaSumir);
                 }

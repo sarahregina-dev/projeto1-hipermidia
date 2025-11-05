@@ -22,8 +22,8 @@ public class GameBuilder {
         World worldData = null;
 
         try {
-            //worldData = JSONLoader.loadFromFile("src/main/resources/world.json");  //json original
-            worldData = JSONLoader.loadFromFile("src/main/resources/greater_world.json"); // nosso json maior com o corvo como narrador
+            worldData = JSONLoader.loadFromFile("src/main/resources/world.json");  //json original
+            //worldData = JSONLoader.loadFromFile("src/main/resources/greater_world.json"); // nosso json maior com o corvo como narrador
 
         } catch (Exception e) {
             System.err.println("Erro fatal: Não foi possível carregar o arquivo do mundo.");

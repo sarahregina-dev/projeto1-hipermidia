@@ -153,7 +153,7 @@
           "item": "elmo_arranhado",
           "description": "Você tenta usar o elmo para cavar, mas não funciona. O elmo quebra em pedaços inúteis. Crá! ♫",
           "action": {
-            "type": "sumir_item_do_inventario"
+            "type": "sumir_item_do_inventorio"
           }
         }
       ]
