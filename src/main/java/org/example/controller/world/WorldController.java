@@ -8,10 +8,10 @@ import java.util.Iterator;
 
 public class WorldController {
 
-    private World world;
-    private Inventory inventory;
-    private InventoryController inventoryController;
-    private RoomController roomController;
+    private final World world;
+    private final Inventory inventory;
+    private final InventoryController inventoryController;
+    private final RoomController roomController;
 
 
     public WorldController(World worldData) {
