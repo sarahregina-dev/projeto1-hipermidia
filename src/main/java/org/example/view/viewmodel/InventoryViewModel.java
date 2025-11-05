@@ -1,4 +1,4 @@
-package org.example.view;
+package org.example.view.viewmodel;
 
 import java.util.List;
 import java.util.ArrayList;

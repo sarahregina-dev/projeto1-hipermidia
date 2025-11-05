@@ -1,7 +1,7 @@
 package org.example.view;
 
-import org.example.model.Item;
-import org.example.controller.world.InventoryController;
+import org.example.view.viewmodel.InventoryViewModel;
+
 import java.util.ArrayList;
 import java.util.List;
 

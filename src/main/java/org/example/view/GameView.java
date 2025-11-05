@@ -86,8 +86,6 @@ public class GameView {
 
     }
 
-
-
     public void showIntro() {
         List<String> introTextList = List.of(
                 "Parece que chegou aqui sem quererr...  Crá-crá ♫ ♪",
@@ -125,19 +123,19 @@ public class GameView {
         System.out.println("GAME WON! ... Crá crá ♫ ♪ ... Você conseguiu encontrarrr a saída! ♫ ♪ ");
     }
 
-    public void showGameOver(Monster monster) {
+    public void showGameOver(String name, String description) {
 
         List<String> messageLines = new ArrayList<>();
 
-        if (monster != null) {
+        if (description != null && name!= null) {
             // Título
-            messageLines.add(monster.getDescription());
+            messageLines.add(description);
             messageLines.add("");
             messageLines.add("Crrrá... Crrá... ♫ ♪ Que bagunça!");
             messageLines.add("Mais sangue no meu chão... ♫");
             messageLines.add("");
 
-            messageLines.add("Foi o " + monster.getName() + ", não foi? ♫ ♪");
+            messageLines.add("Foi o " + name + ", não foi? ♫ ♪");
             messageLines.add("Parrrece que ele foi mais rrrápido... ♫ ♪ ...mas isso é porrrque você não trrrouxe o item cerrrto! Crá! ♫");          messageLines.add("");
 
            // messageLines.add("Você precisava do item [" + monster.getDefeatItem() + "] para vencê-lo."); // Comentar para dificultar

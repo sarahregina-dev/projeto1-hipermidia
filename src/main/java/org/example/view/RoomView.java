@@ -1,62 +1,42 @@
 package org.example.view;
 
-import org.example.controller.world.RoomController;
-import org.example.model.Item;
-import org.example.model.Monster;
-import org.example.model.Room;
-import org.example.util.DirectionMapper;
+import org.example.view.viewmodel.RoomViewModel;
 
 import java.util.*;
 
 public class RoomView {
 
-    public String renderRoom(RoomController roomController, Room room) {
+    public String renderRoom(RoomViewModel viewModel) {
         List<String> finalLines = new ArrayList<>();
 
-        // título: nome da sala em caps
-        finalLines.add(roomController.getRoomName(room).toUpperCase(Locale.ROOT));
+        finalLines.add(viewModel.roomName);
         finalLines.add("");
 
-        // descrição da sala max 60
-        finalLines.addAll(UiFormatter.wrapText(room.getDescription(), 60));
+        finalLines.add("");
 
-        // itens visíveis
-        if (!roomController.getItemsInRoom(room).isEmpty()) {
+        finalLines.addAll(UiFormatter.wrapText(viewModel.roomDescription,60));
+
+        if(!viewModel.items.isEmpty()){
             finalLines.add("");
             finalLines.add("Você vê:");
 
-            for (Item item : room.getItems()) {
-                String raw = "- " + item.getItemName()
-                        + ": " + item.getDescription();
+            for (RoomViewModel.ItemData item : viewModel.items) {
+                String raw = "- " + item.name + ": " + item.description;
                 finalLines.addAll(UiFormatter.wrapText(raw, 60));
             }
         }
 
-        // monstro presente
-        Monster monster = roomController.getMonster(room);
-        if (monster != null && !monster.isDefeated()) {
+        if (viewModel.monsterDescription!=null){  //essa parte está meio inutil atualmente, pois a logica de combate acontece antes daqui.  O if nunca é verdadeiro
             finalLines.add("");
-            finalLines.add("Perigo aqui:");
-            finalLines.addAll(UiFormatter.wrapText(monster.getDescription(), 60));
+            finalLines.add("Perigo à vista: ");
+            finalLines.addAll(UiFormatter.wrapText(viewModel.monsterDescription,60));
+
         }
-
-
-        // saídas
         finalLines.add("");
         finalLines.add("Saídas:");
+        finalLines.addAll(UiFormatter.wrapText(viewModel.exitsLine, 60));
 
-        Enumeration<String> dirs = room.getAdjacentRooms().keys();
-        List<String> saidasPt = new ArrayList<>();
-        while (dirs.hasMoreElements()) {
-            String dirInternal = dirs.nextElement(); // "north"
-            String dirPlayer = DirectionMapper.toPlayer(dirInternal); // "norte"
-            saidasPt.add(dirPlayer);
-        }
-
-        String exitsLine = String.join(", ", saidasPt);
-        finalLines.addAll(UiFormatter.wrapText(exitsLine, 60));
-
-        // devolve tudo na caixa
         return UiFormatter.boxify(finalLines);
+
     }
 }

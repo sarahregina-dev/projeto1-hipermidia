@@ -6,13 +6,14 @@ import org.example.model.Room;
 import org.example.util.DirectionMapper;
 import org.example.view.InventoryView;
 import org.example.view.RoomView;
+import org.example.view.UiFormatter;
+import org.example.view.viewmodel.RoomViewModel;
 
 //Game Controller se comunica com o WorldController para gerenciar a lógica do jogo
 // e utiliza as views para apresentar informações ao jogador.
 
 public class GameController {
     private final WorldController worldController;
-
     private final RoomView roomView;
     private final InventoryView inventoryView;
 
@@ -41,7 +42,8 @@ public class GameController {
         return switch (action) {
             case "look", "olhar", "examinar", "examinar sala" -> {
                 Room currentRoom = worldController.getCurrentRoom();
-                yield roomView.renderRoom(worldController.getRoomController(), currentRoom);
+                RoomViewModel viewModel = worldController.getRoomController().createViewModel(currentRoom);
+                yield roomView.renderRoom(viewModel);
             }
 
             case "inventario", "inventário", "mochila", "bag" ->
@@ -69,13 +71,14 @@ public class GameController {
 
             case "pegar", "pick" -> {
                 if (arg.isEmpty()) yield "Pegarrr o quê?  ♫ ♪" ;
-
-                String takeResult = worldController.takeItem(arg);
+                String itemId = UiFormatter.formatOutsideToInside(arg);
+                String takeResult = worldController.takeItem(itemId);
+                String formattedPickUpName = UiFormatter.formatInsideToOutside(itemId); //sempre retorna formatado bonitingo
                 //  Retorna uma string de status
                 yield switch (takeResult){
-                    case "__TAKE_SUCCESS__" -> "Você pegou: "+ arg + " ♫ ♪ ";
-                    case "__TAKE_ERROR_NOT_FOUND__" -> "Não há esse item aqui: " + arg + " ♫ ♪ ";
-                    case "__TAKE_ERROR_FULL__" -> "♫ ♪ Seu inventárrrio está cheio. ♫ ♪ Não foi possível pegarrr: " + arg ;
+                    case "__TAKE_SUCCESS__" -> "Você pegou: "+ formattedPickUpName + " ♫ ♪ ";
+                    case "__TAKE_ERROR_NOT_FOUND__" -> "Não há esse item aqui: " + formattedPickUpName + " ♫ ♪ ";
+                    case "__TAKE_ERROR_FULL__" -> "♫ ♪ Seu inventárrrio está cheio. ♫ ♪ Não foi possível pegarrr: " + formattedPickUpName ;
                     default -> "Algo inesperrrado aconteceu..." + takeResult + " ♫ ♪  Crá-crá ";
                 };
             }
@@ -83,12 +86,14 @@ public class GameController {
             case "largar", "drop", "soltar" -> {
 
                 if (arg.isEmpty()) yield "Largarrr o quê?  ♫ ♪";
-                String dropResult = worldController.dropItem(arg);
+                String itemToRemoveId = UiFormatter.formatOutsideToInside(arg);
+                String dropResult = worldController.dropItem(itemToRemoveId);
+                String formattedDropName = UiFormatter.formatInsideToOutside(itemToRemoveId); //sempre retorna formatado bonitingo
 
                 yield switch (dropResult) {
-                    case "__DROP_SUCCESS__" -> "♫ ♪ Você larrrgou: " + arg;
-                    case "__DROP_ERROR_NOT_FOUND__" -> "Você não tem o item '" + arg + "' no inventárrrio. ♫ ♪ ";
-                    case "__DROP_ERROR_GENERIC__" -> "Não foi possível largarr o item '" + arg + "'  ♫ ♪.";
+                    case "__DROP_SUCCESS__" -> "♫ ♪ Você larrrgou: " + formattedDropName;
+                    case "__DROP_ERROR_NOT_FOUND__" -> "Você não tem o item '" + formattedDropName + "' no inventárrrio. ♫ ♪ ";
+                    case "__DROP_ERROR_GENERIC__" -> "Não foi possível largarr o item '" +formattedDropName + "'  ♫ ♪.";
                     default -> "Algo inesperrrado aconteceu... Crá-crá ♫ ♪ " + dropResult;
                 };
             }

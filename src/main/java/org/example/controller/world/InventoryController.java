@@ -2,7 +2,8 @@ package org.example.controller.world;
 
 import org.example.model.Inventory;
 import org.example.model.Item;
-import org.example.view.InventoryViewModel;
+import org.example.view.UiFormatter;
+import org.example.view.viewmodel.InventoryViewModel;
 
 import java.util.List;
 
@@ -16,16 +17,13 @@ public class InventoryController {
 
     public Boolean pickUp(Item item){
        return inventory.add(item);
-
     }
 
     public Boolean drop(Item item){
          return inventory.remove(item);
-
     }
 
     private List<Item> getItems() {
-
         return inventory.getItems();
     }
 
@@ -59,11 +57,11 @@ public class InventoryController {
 
         InventoryViewModel viewModel = new InventoryViewModel(current, max);
 
-
         for (Item itemModel : itemsDoModel) {
-            String nome = itemModel.getItemName();
+            String rawName = itemModel.getItemName();
+            String formattedName = UiFormatter.formatInsideToOutside(rawName);
             String desc = itemModel.getDescription();
-            viewModel.items.add(new InventoryViewModel.ItemData(nome, desc));
+            viewModel.items.add(new InventoryViewModel.ItemData(formattedName, desc));
         }
 
         return viewModel;

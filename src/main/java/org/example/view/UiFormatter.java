@@ -59,5 +59,27 @@ public class UiFormatter {
 
         return sb.toString();
     }
+    
+    public static String formatInsideToOutside(String itemName) {
+        if (itemName == null || itemName.isBlank()) {
+            return "";
+        }
+        String[] words = itemName.split("_");
+        StringBuilder formattedItemName = new StringBuilder();
+        for (String word : words) {
+            formattedItemName.append(Character.toUpperCase(word.charAt(0)))
+              .append(word.substring(1).toLowerCase())
+              .append(" ");
+        }
+        return formattedItemName.toString().trim();
+    }
+
+    public static String formatOutsideToInside(String inputedItemName) {
+        if (inputedItemName == null || inputedItemName.isBlank()) {
+            return "";
+        }
+        return inputedItemName.trim().toLowerCase().replace(" ", "_");
+    }
+    
 
 }

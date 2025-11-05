@@ -54,9 +54,15 @@ public class GameEngine {
             //   Se o sinal de derrota foi recebido
             else if (response.equals("__GAME_OVER_DEFEAT__")) {
                 Monster monster = gameController.getDefeatingMonster();
+                String desc = null;
+                String name = null;
+                if (monster != null) {
+                    desc = monster.getDescription();
+                    name = monster.getName();
+                }
 
 
-                gameView.showGameOver(monster);
+                gameView.showGameOver(name,desc);
                 break; // O jogo acabou (gameController.isGameOver() já é true)
             }
 
