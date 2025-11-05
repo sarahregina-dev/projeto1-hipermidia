@@ -4,6 +4,7 @@ import org.example.controller.GameController;
 import org.example.controller.world.WorldController;
 import org.example.model.Monster;
 import org.example.view.GameView;
+import org.example.view.UiFormatter;
 
 
 // Controla o Loop principal do jogo
@@ -58,7 +59,7 @@ public class GameEngine {
                 String name = null;
                 if (monster != null) {
                     desc = monster.getDescription();
-                    name = monster.getName();
+                    name = UiFormatter.formatInsideToOutside(monster.getName());
                 }
 
 
