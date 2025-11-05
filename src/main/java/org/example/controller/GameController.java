@@ -45,7 +45,7 @@ public class GameController {
             }
 
             case "inventario", "inventário", "mochila", "bag" ->
-                    inventoryView.render(worldController.getInventoryController());
+                    inventoryView.render(worldController.getInventoryController().createViewModel());
 
             case "ir", "go" -> {
                 if (arg.isEmpty()) {
