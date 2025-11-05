@@ -19,8 +19,8 @@ import java.util.Map;
 public class JSONLoader {
 
 
-     /** Método público principal. Carrega o mundo.
-      * */
+     //Carrega o mundo
+
     public static World loadFromFile(String path) {
         try {
             // Lê e parseia o JSON
@@ -57,9 +57,8 @@ public class JSONLoader {
         }
     }
 
-    /**
-     * Parseia cada sala individualmente.
-     */
+    //Parseia cada sala individualmente.
+
     private static Map<String, Room> parseRooms(JSONObject roomsObject) {
         Map<String, Room> roomsByName = new HashMap<>();
 
@@ -71,9 +70,8 @@ public class JSONLoader {
         return roomsByName;
     }
 
-    /**
-     * Parseia um único objeto de sala do JSON.
-     */
+    //Parseia um único objeto de sala do JSON
+
     private static Room parseSingleRoom(String roomName, JSONObject roomJson) {
         String description = roomJson.getString("description");
 
@@ -92,9 +90,7 @@ public class JSONLoader {
         );
     }
 
-    /**
-     * Extrai a lista de itens de uma sala.
-     */
+    //Extrai a lista de itens de uma sala
     private static List<Item> parseItems(JSONObject roomJson) {
         List<Item> items = new ArrayList<>();
         if (roomJson.has("itens")) {
@@ -107,9 +103,8 @@ public class JSONLoader {
         return items;
     }
 
-    /**
-     * Extrai as saídas (direções) de uma sala.
-     */
+    //Extrai as saídas (direções) de uma sala
+
     private static Dictionary<String, String> parseExits(JSONObject roomJson) {
         Dictionary<String, String> exits = new Hashtable<>();
         String[] directions = {"north", "south", "east", "west", "up", "down"};
@@ -123,9 +118,8 @@ public class JSONLoader {
         return exits;
     }
 
-    /**
-     * Extrai o monstro de uma sala, se existir.
-     */
+    //Extrai o monstro de uma sala, se existir
+
     private static Monster parseMonster(JSONObject roomJson) {
         if (roomJson.has("monster") && !roomJson.isNull("monster")) {
             JSONObject m = roomJson.getJSONObject("monster");
@@ -138,9 +132,8 @@ public class JSONLoader {
         return null;
     }
 
-    /**
-     * Extrai a lista de ações "use" (interações com itens) de uma sala.
-     */
+    //Extrai a lista de ações "use" (interações com itens) de uma sala
+
     private static List<UseAction> parseUseActions(JSONObject roomJson) {
         List<UseAction> useActions = new ArrayList<>();
 
@@ -154,15 +147,13 @@ public class JSONLoader {
 
                 JSONObject actionObj = useObj.getJSONObject("action");
 
-                // Lemos as propriedades de dentro do objeto 'action'
+                // Lemos as propriedades de dentro do objeto action
                 String type = actionObj.getString("type");
                 String direction = actionObj.has("direction") ? actionObj.getString("direction") : null;
                 String toRoom = actionObj.has("to") ? actionObj.getString("to") : null;
                 String targetItem = actionObj.has("target_item") ? actionObj.getString("target_item") : null;
 
-                // target monster se precisar no futuro entra aqui
                 // String targetMonster = actionObj.has("target_monster") ? actionObj.getString("target_monster") : null;
-
 
 
                 UseAction ua = new UseAction(

@@ -7,6 +7,9 @@ import org.example.util.DirectionMapper;
 import org.example.view.InventoryView;
 import org.example.view.RoomView;
 
+//Game Controller se comunica com o WorldController para gerenciar a lógica do jogo
+// e utiliza as views para apresentar informações ao jogador.
+
 public class GameController {
     private final WorldController worldController;
 
@@ -16,7 +19,6 @@ public class GameController {
     public GameController(WorldController worldController) {
         this.worldController = worldController;
 
-        //  O GameController cria (instancia) as Views
         this.roomView = new RoomView();
         this.inventoryView = new InventoryView();
     }

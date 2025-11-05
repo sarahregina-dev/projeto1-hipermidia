@@ -59,7 +59,8 @@ public class GameEngine {
 
             // Se o sinal de vitoria foi recebido
             else if (response.endsWith("__GAME_WON__")) {
-                // Trata prefixo (ex: msg de combate)
+                //A mensagem pode ter um prefixo antes do sinal, por exemplo, a mensagem de derrota/vitoria do combate
+                //Remove o sinal e exibe o prefixo, se houver
                 String prefix = response.replace("__GAME_WON__", "");
                 if (!prefix.trim().isEmpty()) {
                     gameView.showMessage(prefix);
@@ -68,7 +69,6 @@ public class GameEngine {
                 break; // O jogo acabou (gameController.isGameOver() é true)
             }
 
-            // mensagem normal
             else {
                 gameView.showMessage(response);
             }

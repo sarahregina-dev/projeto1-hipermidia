@@ -47,7 +47,6 @@ public class WorldController {
 
 
     /**
-     *
      * Move o jogador, executa combate E verifica a vitória.
      */
     public String moveToRoomDirection(String direction) {
@@ -152,7 +151,6 @@ public class WorldController {
         applyUseAction(current, action);
 
         //  Se chegou aqui deu certo
-        // Retorne a descrição do JSON
         return action.getDescription();
     }
 

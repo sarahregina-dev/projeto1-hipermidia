@@ -130,7 +130,7 @@ public class GameView {
         List<String> messageLines = new ArrayList<>();
 
         if (monster != null) {
-            // 1. Título do Box
+            // Título
             messageLines.add(monster.getDescription());
             messageLines.add("");
             messageLines.add("Crrrá... Crrá... ♫ ♪ Que bagunça!");
@@ -141,6 +141,7 @@ public class GameView {
             messageLines.add("Parrrece que ele foi mais rrrápido... ♫ ♪ ...mas isso é porrrque você não trrrouxe o item cerrrto! Crá! ♫");          messageLines.add("");
 
            // messageLines.add("Você precisava do item [" + monster.getDefeatItem() + "] para vencê-lo."); // Comentar para dificultar
+
         } else {
             messageLines.add("Parece que algo desconhecido te matou ♫ ♪...");
             messageLines.add("Prrrecisamos investigarrrr ♫ ♪ .");
