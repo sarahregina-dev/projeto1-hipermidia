@@ -2,6 +2,20 @@ package org.example.app;
 
 import org.example.core.GameEngine;
 
+/*
+* Trabalho 1 de Implementação da Disciplina Hipermídia.
+*
+* Alunas:
+* Amanda Almeida Cardoso
+* Sarah Regina Bezerra Sousa
+*
+* Professor: Carlos Salles
+*
+* Novembro 2025
+*
+* */
+
+
 public class Main {
 
     //inicializacao

@@ -4,7 +4,7 @@ public class UseAction {
 
     private final String itemName;
     private final String description;
-    private final String type;         // "abrir_direcao", "sumir_item", "derrotar_monstro", ...
+    private final String type;         // "abrir_direcao", "sumir_item", , ...
 
 
     private final String direction;    // pra abrir/fechar direção

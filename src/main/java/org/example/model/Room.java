@@ -51,8 +51,15 @@ public class Room {
         this.items = items;
     }
 
-    public void addItem(Item item) {
+    public boolean addItem(Item item) {
+        if(item == null){
+            return false;
+        }
+        if(items.contains(item)){
+            return false;
+        }
         this.items.add(item);
+        return true;
     }
     public Item removeItemByName(String itemName) {
         Item item = getItemByName(itemName);

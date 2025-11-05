@@ -5,6 +5,9 @@ import org.example.controller.world.WorldController;
 import org.example.model.Monster;
 import org.example.view.GameView;
 
+
+// Controla o Loop principal do jogo
+
 public class GameEngine {
 
     private final GameController gameController;
