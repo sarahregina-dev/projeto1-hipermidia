@@ -38,6 +38,7 @@ public class GameController {
         String[] parts = cmd.split("\\s+", 2);
         String action = parts[0];
         String arg = (parts.length > 1) ? parts[1] : "";
+        String formattedArg = UiFormatter.formatOutsideToInside(arg);
 
         return switch (action) {
             case "look", "olhar", "examinar", "examinar sala" -> {
@@ -71,9 +72,8 @@ public class GameController {
 
             case "pegar", "pick" -> {
                 if (arg.isEmpty()) yield "Pegarrr o quê?  ♫ ♪" ;
-                String itemId = UiFormatter.formatOutsideToInside(arg);
-                String takeResult = worldController.takeItem(itemId);
-                String formattedPickUpName = UiFormatter.formatInsideToOutside(itemId); //sempre retorna formatado bonitingo
+                String takeResult = worldController.takeItem(formattedArg);
+                String formattedPickUpName = UiFormatter.formatInsideToOutside(formattedArg); //sempre retorna formatado bonitingo
                 //  Retorna uma string de status
                 yield switch (takeResult){
                     case "__TAKE_SUCCESS__" -> "Você pegou: "+ formattedPickUpName + " ♫ ♪ ";
@@ -86,9 +86,8 @@ public class GameController {
             case "largar", "drop", "soltar" -> {
 
                 if (arg.isEmpty()) yield "Largarrr o quê?  ♫ ♪";
-                String itemToRemoveId = UiFormatter.formatOutsideToInside(arg);
-                String dropResult = worldController.dropItem(itemToRemoveId);
-                String formattedDropName = UiFormatter.formatInsideToOutside(itemToRemoveId); //sempre retorna formatado bonitingo
+                String dropResult = worldController.dropItem(formattedArg);
+                String formattedDropName = UiFormatter.formatInsideToOutside(formattedArg); //sempre retorna formatado bonitingo
 
                 yield switch (dropResult) {
                     case "__DROP_SUCCESS__" -> "♫ ♪ Você larrrgou: " + formattedDropName;
@@ -101,7 +100,7 @@ public class GameController {
 
             case "usar", "use" -> {
                 if (arg.isEmpty()) yield "Usarrr o quê? ♫ ♪";
-                String useResult = worldController.useItem(arg);
+                String useResult = worldController.useItem(formattedArg);
 
                 yield switch (useResult){
                     case "__USE_ERROR_NOT_OWNED__" -> "Você não tem esse item: " + arg + " ♫ ♪ ";
